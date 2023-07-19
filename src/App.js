@@ -95,6 +95,8 @@ function App() {
             <img class="weather-icon" src={city["image_code"]}></img>
           </div>
         ))}
+
+        
         
       {!displaying && !fetching && !errorDisplay && (
         <div class="container">
