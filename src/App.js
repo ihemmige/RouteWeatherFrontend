@@ -27,7 +27,7 @@ function App() {
 
   const getRouteWeather = async (origin, destination) => {
     let url = format(
-      "https://route-weather-app.onrender.com/?origin={0}&destination={1}",
+      "https://routeweatherapi.azurewebsites.net/forecast?origin={0}&destination={1}",
       origin,
       destination
     );
@@ -75,7 +75,6 @@ function App() {
               {...register("destination", { required: true })}
             />
           </div>
-
           <input class="text-box" type="submit" />
         </form>
       }
