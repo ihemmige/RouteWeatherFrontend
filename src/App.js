@@ -9,6 +9,9 @@ function App() {
   const [locations, setLocations] = useState([{}]);
   const [displaying, setDisplaying] = useState(false);
   const [fetching, setFetching] = useState(false);
+  const [errorDisplay, setErrorDisplay] = useState(false);
+  const [errorMessage, setErrorMessage] = useState([{}]);
+
   useEffect(() => {
     setDisplaying(false);
     setFetching(false);
@@ -28,12 +31,26 @@ function App() {
       origin,
       destination
     );
-    // todo - handle errors from get request
-    const response = await axios.get(url);
-    setLocations(response.data);
-    setDisplaying(true);
-    setFetching(false);
-    reset();
+
+    setErrorDisplay(false);
+    setErrorMessage([{}]);
+    axios
+      .get(url)
+      .then(function (response) {
+        setLocations(response.data);
+        setDisplaying(true);
+        setFetching(false);
+        reset();
+      })
+      .catch(function (error) {
+        try {
+          setErrorMessage(error.response.data["result"]);
+        } catch (anotherError) {
+          setErrorMessage("Unknown error. Please try again.");
+        }
+        setFetching(false);
+        setErrorDisplay(true);
+      });
   };
 
   return (
@@ -54,36 +71,35 @@ function App() {
               type="text"
               placeholder="Destination"
               name="dest"
-              class = "text-box"
+              class="text-box"
               {...register("destination", { required: true })}
             />
           </div>
-          
-          <input class="submit" type="submit"/>
-          
+
+          <input class="submit" type="submit" />
         </form>
       }
-      
 
       {fetching && <p>Building route and weather data...</p>}
 
-      {displaying && !fetching &&
+      {errorDisplay && <p> {errorMessage} </p>}
+
+      {displaying &&
+        !fetching &&
+        !errorDisplay &&
         locations.result.map((city, i) => (
-          <div>
-            <p className="App-Link" key={i}>
-              {i + 1}. {city["city"]}, {city["zip_code"]}: {city["weather"]}
+          <div class="container">
+            <img class="weather-icon" src={city["image_code"]}></img>
+            <p key={i}>
+              {city["city"]}, {city["zip_code"]} - {city["weather"]}
             </p>
-            {/* <p className="App-Link" key={2 * i + 1}>
-              
-            </p> */}
+            <img class="weather-icon" src={city["image_code"]}></img>
           </div>
         ))}
-
-      {!displaying && !fetching && (
-        <p>Provide an  and destination to get weather along the route.</p>
+      {!displaying && !fetching && !errorDisplay && (
+        <p>Provide an origin and destination to get weather along the route.</p>
       )}
     </div>
-    
   );
 }
 
