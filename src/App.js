@@ -62,7 +62,7 @@ function App() {
               type="text"
               placeholder="Origin"
               name="origin"
-              class="text-box"
+              class="first-box"
               {...register("origin", { required: true })}
             />
           </div>
@@ -76,7 +76,7 @@ function App() {
             />
           </div>
 
-          <input class="submit" type="submit" />
+          <input class="text-box" type="submit" />
         </form>
       }
 
@@ -96,8 +96,11 @@ function App() {
             <img class="weather-icon" src={city["image_code"]}></img>
           </div>
         ))}
+        
       {!displaying && !fetching && !errorDisplay && (
-        <p>Provide an origin and destination to get weather along the route.</p>
+        <div class="container">
+        <p class="open-directions">Provide an origin and destination to get weather along the route.</p>
+        </div>
       )}
     </div>
   );
