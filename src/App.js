@@ -96,8 +96,6 @@ function App() {
           </div>
         ))}
 
-        
-        
       {!displaying && !fetching && !errorDisplay && (
         <div class="container">
         <p class="open-directions">Provide an origin and destination to get weather along the route.</p>

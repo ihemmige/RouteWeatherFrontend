@@ -8,8 +8,9 @@
        "default_title": "Open the popup"
    },
   "icons": {
-       "16": "/weather/64x64/day/113.png",
-       "48": "/weather/64x64/day/113.png",
-       "128": "/weather/64x64/day/113.png"
-   }
+       "16": "weather.png",
+       "48": "weather.png",
+       "128": "weather.png"
+   },
+   "description": "Provides waypoints along a driving route between two points, with weather in each city at the time user will pass through the city."
 }
